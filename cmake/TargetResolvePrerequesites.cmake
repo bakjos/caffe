@@ -140,7 +140,9 @@ function(copy_changed_file filename destination use_hard_links)
     # builds
     string(SHA1 _hash ${_dst_name})
     set(_lock_file ${CMAKE_BINARY_DIR}/${_hash}.lock)
-    file(LOCK ${_lock_file} GUARD FUNCTION)
+    if ( UNIX)
+      file(LOCK ${_lock_file} GUARD FUNCTION)
+    endif()  
 
     if(EXISTS ${_dst_name})
         file(TIMESTAMP ${_dst_name} _dst_time)
